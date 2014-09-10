@@ -22,6 +22,7 @@
                                     <constraint firstAttribute="width" constant="125" id="H2s-CS-hhc"/>
                                     <constraint firstAttribute="height" constant="82" id="Xzv-zN-bYR"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Start">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -31,7 +32,6 @@
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" scrollEnabled="NO" editable="NO" text="00:00.000" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rgf-Pi-cnk">
                                 <rect key="frame" x="180" y="54" width="240" height="128"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" none="YES" updatesFrequently="YES"/>
                                 </accessibility>
@@ -74,7 +74,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="7aW-nD-LSO" firstAttribute="centerX" secondItem="y3c-jy-aDJ" secondAttribute="centerX" id="Gwx-3t-doU"/>
                             <constraint firstItem="I86-oO-iy4" firstAttribute="top" secondItem="7aW-nD-LSO" secondAttribute="bottom" constant="8" symbolic="YES" id="T3t-4M-Tnt"/>
@@ -82,7 +82,7 @@
                             <constraint firstItem="I86-oO-iy4" firstAttribute="leading" secondItem="wfy-db-euE" secondAttribute="leading" id="YKi-Y7-F3T"/>
                             <constraint firstAttribute="centerY" secondItem="7aW-nD-LSO" secondAttribute="centerY" id="a8M-JD-r3c"/>
                             <constraint firstItem="I86-oO-iy4" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="gGg-hx-eJI"/>
-                            <constraint firstItem="rgf-Pi-cnk" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="ofb-Za-muj"/>
+                            <constraint firstItem="rgf-Pi-cnk" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="75" id="ofb-Za-muj"/>
                             <constraint firstItem="I86-oO-iy4" firstAttribute="trailing" secondItem="wfy-db-euE" secondAttribute="trailing" id="uBs-dT-rRR"/>
                         </constraints>
                     </view>
