@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-  let GroupTimer = GroupTimerModel()
+  let GroupTimer = GroupTimerModel(max: NSTimeInterval(10))
   // Since the millis are updated so quickly we want to leave the perception that the view is being updated fater than
   // the user can see & that all numbers are changing - this value makes each digit of the millis readout change for each
   // update.
@@ -19,6 +19,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   let WarningColor = UIColor.yellowColor()
   let NormalColor = UIColor.greenColor()
   
+  // Recurring timer to trigger view updates.
   var timer: NSTimer!
   
   @IBOutlet weak var remainingTime: UITextView!
@@ -34,8 +35,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     if let t = timer { if GroupTimer.expired() {
       stop()
       newTime = GroupTimer.time(GroupTimer.MaxLength)
-      remainingTime.textColor = UIColor.redColor()
-      }}
+      remainingTime.textColor = ExpiredColor
+    } else if GroupTimer.expiringSoon() {
+      remainingTime.textColor = WarningColor
+    }}
     
     remainingTime.text = newTime
   }

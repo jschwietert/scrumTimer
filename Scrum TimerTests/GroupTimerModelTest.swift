@@ -14,7 +14,7 @@ class GroupTimerModelTest: XCTestCase {
 
   override func setUp() {
     super.setUp()
-    gt = GroupTimerModel()
+    gt = GroupTimerModel(max: NSTimeInterval(2 * 60))
   }
   
   func testStartTimer() {
@@ -54,6 +54,12 @@ class GroupTimerModelTest: XCTestCase {
   
   func testSixtyOneAndFractionSeconds() {
     XCTAssertEqual("01:01.213", gt.time(NSTimeInterval(61.213)))
+  }
+  
+  func testAlmostExpired() {
+    gt.startTime = NSDate().dateByAddingTimeInterval(NSTimeInterval(-1 * gt.AlmostMax))
+    
+    XCTAssert(gt.expiringSoon())
   }
   
   func testExpiration() {

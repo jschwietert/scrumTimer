@@ -11,7 +11,7 @@ import XCTest
 
 class Scrum_TimerTests: XCTestCase {
 
-  var gt = GroupTimerModel()
+  var gt = GroupTimerModel(max: NSTimeInterval(10))
   
     override func setUp() {
         super.setUp()

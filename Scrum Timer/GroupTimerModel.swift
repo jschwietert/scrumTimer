@@ -8,8 +8,12 @@
 
 import Foundation
 
+/**
+  * Manage a timer for a group of people. The timer increases over time.
+  */
 class GroupTimerModel {
-  let MaxLength = NSTimeInterval(10)
+  let AlmostMax: NSTimeInterval
+  let MaxLength: NSTimeInterval
   
   var currentTime: NSDate {
     get { return NSDate() }
@@ -18,7 +22,10 @@ class GroupTimerModel {
   var startTime: NSDate?
   var endTime: NSDate?
   
-  init() {}
+  init(max: NSTimeInterval) {
+    MaxLength = max
+    AlmostMax = max * 0.90
+  }
   
   func start() { startTime = currentTime }
   
@@ -41,16 +48,17 @@ class GroupTimerModel {
     
     return String(format: "%02.0f:%02.0f.%03.0f", minutes, seconds, millis)
   }
-  
   func time() -> String { return time(duration()) }
   
-  func expiredAlmost() -> Bool {
-    return false
+  func expiringSoon(duration: NSTimeInterval)  -> Bool {
+    return duration > AlmostMax
   }
+  func expiringSoon() -> Bool { return expiringSoon(duration()) }
   
-  func expired() -> Bool {
-    return duration() > MaxLength
+  func expired(duration: NSTimeInterval) -> Bool {
+    return duration > MaxLength
   }
+  func expired() -> Bool { return expired(duration()) }
   
   func end() { endTime = currentTime }
 }
