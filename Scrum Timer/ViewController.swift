@@ -25,29 +25,24 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   @IBOutlet weak var remainingTime: UITextView!
   
   func resetView() {
-    stop()
+    GroupTimer.stop()
+    
     remainingTime.textColor = NormalColor
   }
 
-  func update() {
-    var newTime = TimerModel.toString(GroupTimer.timeElapsed())
-    
-    if let t = timer { if GroupTimer.expired() {
-      stop()
-      newTime = TimerModel.toString(GroupTimer.Duration)
-      remainingTime.textColor = ExpiredColor
-    } else if GroupTimer.expiringSoon() {
+  func update(timer: TimerModel) {
+    println("updating")
+    if timer.expiringSoon() {
       remainingTime.textColor = WarningColor
-    }}
+    }
     
-    remainingTime.text = newTime
+    remainingTime.text = TimerModel.toString(timer.timeElapsed())
   }
   
   func stop() {
-    if let t = timer {
-      t.invalidate()
-      timer = nil
-    }
+    println("done")
+    remainingTime.textColor = ExpiredColor
+    remainingTime.text = TimerModel.toString(GroupTimer.Duration)
   }
   
   /** 
@@ -59,7 +54,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     super.viewDidLoad()
     
     resetView()
-    update()
   }
 
   // Dispose of any resources that can be recreated.
@@ -89,9 +83,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     **/
   @IBAction func startTapped(sender: AnyObject) {
     resetView()
-    GroupTimer.start()
-    
-    timer = NSTimer.scheduledTimerWithTimeInterval(ViewUpdateFrequency, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
+    GroupTimer.start(handleUpdate: update, handleDone: stop, updateFrequency: ViewUpdateFrequency)
   }
 }
 

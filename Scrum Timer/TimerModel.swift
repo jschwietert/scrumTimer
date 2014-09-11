@@ -22,12 +22,32 @@ class TimerModel {
   var startTime: NSDate?
   var endTime: NSDate?
   
+  var updateTimer: NSTimer!
+  var updateCallback: (TimerModel) -> () = {var b = $0} // TODO - ugly
+  var doneCallback: () -> () = {}
+  
   init(timerLength: NSTimeInterval, expireWarningPercent: Double = 0.9) {
     Duration = timerLength
     WarningDuration = timerLength * expireWarningPercent
   }
   
   func start() { startTime = currentTime }
+  
+  func start(handleUpdate update: (TimerModel) -> Void, handleDone done: () -> Void, updateFrequency freq: NSTimeInterval = 0.123) {
+    start()
+    
+    updateCallback = update
+    doneCallback = done
+    updateTimer = NSTimer.scheduledTimerWithTimeInterval(freq, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
+  }
+  
+  @objc func update() {
+    if !expired() {
+      updateCallback(self) // TODO - creating two durations
+    } else {
+      stop()
+    }
+  }
   
   func timeElapsed() -> NSTimeInterval {
     var retval: NSTimeInterval
@@ -39,6 +59,8 @@ class TimerModel {
     } else {
       retval = NSTimeInterval(0)
     }
+    
+    println(retval)
     
     return retval
   }
@@ -55,7 +77,18 @@ class TimerModel {
     return timeElapsed() > Duration
   }
   
-  func end() { endTime = currentTime }
+  func stop() {
+    if startTime != .None {
+      endTime = currentTime
+    }
+    
+    if let timer = updateTimer {
+      timer.invalidate()
+      updateTimer = .None
+    }
+    
+    doneCallback()
+  }
   
   class func toString(duration: NSTimeInterval) -> String {
     var millis = (duration * 1000) % 1000

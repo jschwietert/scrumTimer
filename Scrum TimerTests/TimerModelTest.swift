@@ -79,4 +79,17 @@ class TimerModelTest: XCTestCase {
     
     XCTAssert(gt.expired())
   }
+  
+  func testStop() {
+    gt.start()
+    XCTAssert(gt.endTime == .None)
+    
+    gt.stop()
+    XCTAssert(gt.endTime != .None)
+  }
+  
+  func testStopBeforeStart() {
+    gt.stop()
+    XCTAssert(gt.endTime == .None)
+  }
 }
