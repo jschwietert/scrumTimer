@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-  let GroupTimer = GroupTimerModel(max: NSTimeInterval(10))
+  let GroupTimer = TimerModel(timerLength: NSTimeInterval(10))
   // Since the millis are updated so quickly we want to leave the perception that the view is being updated fater than
   // the user can see & that all numbers are changing - this value makes each digit of the millis readout change for each
   // update.
@@ -30,11 +30,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
   }
 
   func update() {
-    var newTime = GroupTimer.time()
+    var newTime = TimerModel.toString(GroupTimer.timeElapsed())
     
     if let t = timer { if GroupTimer.expired() {
       stop()
-      newTime = GroupTimer.time(GroupTimer.MaxLength)
+      newTime = TimerModel.toString(GroupTimer.Duration)
       remainingTime.textColor = ExpiredColor
     } else if GroupTimer.expiringSoon() {
       remainingTime.textColor = WarningColor
